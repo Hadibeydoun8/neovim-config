@@ -1,21 +1,22 @@
 return {
 	"stevearc/overseer.nvim",
+	-- Do NOT pin to v1.6.0 — it uses APIs removed in Neovim 0.12
+	-- Use latest HEAD or v2.0.0+ tag
 	cmd = {
 		"OverseerRun",
 		"OverseerToggle",
-		"OverseerBuild",
 		"OverseerRunCmd",
 		"OverseerInfo",
 	},
 	keys = {
 		{ "<leader>or", "<cmd>OverseerRun<cr>", desc = "Run task" },
 		{ "<leader>ot", "<cmd>OverseerToggle<cr>", desc = "Toggle task list" },
-		{ "<leader>ob", "<cmd>OverseerBuild<cr>", desc = "Build task" },
 		{ "<leader>oa", "<cmd>OverseerTaskAction<cr>", desc = "Task action" },
 		{ "<leader>oc", "<cmd>OverseerRunCmd<cr>", desc = "Run shell command" },
 	},
 	opts = {
-		strategy = "terminal",
+		-- "terminal" wraps the deprecated termopen(); jobstart uses jobstart({term=true})
+		strategy = "jobstart",
 		templates = { "builtin" },
 		task_list = {
 			direction = "bottom",
@@ -25,19 +26,19 @@ return {
 				["<CR>"] = "RunAction",
 				["o"] = "Open",
 				["p"] = "TogglePreview",
-				["<C-r>"] = "Restart", -- re-run like Ctrl+Shift+F10 in JetBrains
-				["<C-x>"] = "Dispose", -- kill + remove
+				["<C-r>"] = "Restart",
+				["<C-x>"] = "Dispose",
 				["q"] = "Close",
 				["?"] = "ShowHelp",
 			},
 		},
-		-- Send cargo errors to the quickfix/diagnostics list (like JetBrains build output)
 		component_aliases = {
 			default = {
 				{ "display_duration", detail_level = 2 },
 				"on_output_summarize",
 				"on_exit_set_status",
-				"on_complete_notify",
+				-- v2.0.0: use on_complete with notify=true instead of on_complete_notify
+				{ "on_complete", notify = true },
 				{ "on_complete_dispose", timeout = 900, require_view = { "SUCCESS" } },
 			},
 		},
@@ -46,9 +47,11 @@ return {
 		local overseer = require("overseer")
 		overseer.setup(opts)
 
-		-- Hook: send cargo build/test output to quickfix automatically
 		overseer.add_template_hook({ module = "^cargo" }, function(task_defn, util)
-			util.add_component(task_defn, { "on_output_quickfix", open_on_exit = "failure" })
+			util.add_component(task_defn, {
+				"on_output_quickfix",
+				open_on_exit = "failure",
+			})
 		end)
 	end,
 }

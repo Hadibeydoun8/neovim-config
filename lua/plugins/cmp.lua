@@ -22,8 +22,8 @@ return {
 				["<S-Tab>"] = cmp.mapping.select_prev_item(),
 			}),
 			sources = {
-				{ name = "copilot" },
 				{ name = "nvim_lsp" },
+				{ name = "copilot" },
 				{ name = "luasnip" },
 				{ name = "buffer" },
 				{ name = "path" },
