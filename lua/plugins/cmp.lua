@@ -1,33 +1,57 @@
 return {
-	"hrsh7th/nvim-cmp",
-	dependencies = {
-		"hrsh7th/cmp-nvim-lsp", -- LSP completions
-		"hrsh7th/cmp-buffer", -- buffer word completions
-		"hrsh7th/cmp-path", -- file path completions
-		"L3MON4D3/LuaSnip", -- snippet engine
-		"saadparwaiz1/cmp_luasnip",
-	},
-	config = function()
-		local cmp = require("cmp")
-		cmp.setup({
-			snippet = {
-				expand = function(args)
-					require("luasnip").lsp_expand(args.body)
-				end,
-			},
-			mapping = cmp.mapping.preset.insert({
-				["<C-Space>"] = cmp.mapping.complete(),
-				["<CR>"] = cmp.mapping.confirm({ select = true }),
-				["<Tab>"] = cmp.mapping.select_next_item(),
-				["<S-Tab>"] = cmp.mapping.select_prev_item(),
-			}),
-			sources = {
-				{ name = "nvim_lsp" },
-				{ name = "copilot" },
-				{ name = "luasnip" },
-				{ name = "buffer" },
-				{ name = "path" },
-			},
-		})
-	end,
+    "saghen/blink.cmp",
+
+    version = "1.*",
+
+    dependencies = {
+        "rafamadriz/friendly-snippets",
+    },
+
+    opts = {
+        keymap = {
+            preset = "enter",
+
+            ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
+            ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+            ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
+        },
+
+        appearance = {
+            nerd_font_variant = "mono",
+        },
+
+        sources = {
+            default = {
+                "lsp",
+                "path",
+                "snippets",
+                "buffer",
+            },
+            per_filetype = {
+                sql = { "dadbod", "buffer", "snippets" },
+            },
+            providers = {
+                dadbod = {
+                    name = "Dadbod",
+                    module = "vim_dadbod_completion.blink",
+                },
+            },
+        },
+
+        completion = {
+            documentation = {
+                auto_show = true,
+            },
+        },
+
+        signature = {
+            enabled = true,
+        },
+
+        fuzzy = {
+            implementation = "prefer_rust_with_warning",
+        },
+    },
+
+    opts_extend = { "sources.default" },
 }

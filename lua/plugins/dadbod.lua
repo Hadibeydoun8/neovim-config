@@ -37,19 +37,8 @@ return {
 			--   PostgreSQL:  postgresql://user:pass@host:5432/database
 			--   SQLite:      sqlite:path/to/db.sqlite
 
-			-- Wire up dadbod-completion to nvim-cmp for SQL buffers
-			vim.api.nvim_create_autocmd("FileType", {
-				pattern = { "sql", "mysql", "plsql" },
-				callback = function()
-					require("cmp").setup.buffer({
-						sources = {
-							{ name = "vim-dadbod-completion" },
-							{ name = "buffer" },
-							{ name = "luasnip" },
-						},
-					})
-				end,
-			})
+			-- SQL completion sources are wired into blink.cmp in plugins/cmp.lua
+			-- (sources.per_filetype.sql + providers.dadbod)
 		end,
 	},
 }
