@@ -1,0 +1,29 @@
+-- return {
+--     "nvim-tree/nvim-tree.lua",
+--     dependencies = { "nvim-tree/nvim-web-devicons" },
+--     opts = {
+--         view = { width = 30 },
+--         renderer = { group_empty = true },
+--         filters = { dotfiles = false },
+--     },
+--     keys = {
+--         { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Toggle file explorer" },
+--     },
+-- }
+--
+-- return {
+--     "folke/snacks.nvim",
+--     opts = {
+--         explorer = { enabled = true },
+--         picker = { enabled = true },
+--     },
+--     keys = {
+--         {
+--             "<leader>e",
+--             function()
+--                 Snacks.explorer()
+--             end,
+--             desc = "Toggle file explorer",
+--         },
+--     },
+-- }
