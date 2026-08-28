@@ -37,8 +37,7 @@ return {
 				{ "display_duration", detail_level = 2 },
 				"on_output_summarize",
 				"on_exit_set_status",
-				-- v2.0.0: use on_complete with notify=true instead of on_complete_notify
-				{ "on_complete", notify = true },
+				"on_complete_notify",
 				{ "on_complete_dispose", timeout = 900, require_view = { "SUCCESS" } },
 			},
 		},
