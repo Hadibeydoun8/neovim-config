@@ -26,3 +26,21 @@ opt.splitright = true -- new vertical splits go right
 opt.splitbelow = true -- new horizontal splits go below
 
 opt.scrolloff = 10
+
+-- diagnostic
+vim.diagnostic.config({
+	virtual_text = true,
+	severity_sort = true,
+	float = { border = "rounded", source = "if_many" },
+	underline = { severity = { min = vim.diagnostic.severity.WARN } },
+
+	jump = {
+		on_jump = function(_, bufnr)
+			vim.diagnostic.open_float({
+				bufnr = bufnr,
+				scope = "cursor",
+				focus = false,
+			})
+		end,
+	},
+})

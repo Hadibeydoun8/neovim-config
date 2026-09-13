@@ -1,0 +1,22 @@
+---
+name: asp-lsp
+description: Classic ASP language server
+homepage: https://github.com/yottonoko/classic-web-system-lsp
+licenses:
+  - MIT
+  - Apache-2.0
+languages:
+  - ASP
+  - VBScript
+categories:
+  - LSP
+
+source:
+  id: pkg:github/yottonoko/classic-web-system-lsp@v0.8.6-preview.16
+  build:
+    run: |
+      pnpm install --frozen-lockfile
+      pnpm run build
+
+bin:
+  asp-lsp: node:packages/language-server/dist/server.js
