@@ -1,5 +1,5 @@
 -- 1. Always enable the system clipboard for local work
-vim.opt.clipboard = "unnamedplus"
+-- vim.opt.clipboard = "unnamedplus"
 
 -- 2. Only override with OSC52 if you are actually on an SSH connection
 if vim.env.SSH_TTY or vim.env.SSH_CONNECTION then

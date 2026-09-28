@@ -14,8 +14,17 @@ opt.number = true -- line numbers
 opt.relativenumber = true -- relative line numbers (great for jumping)
 opt.signcolumn = "yes" -- always show sign column (stops layout shifting)
 opt.cursorline = true -- highlight current line
-opt.scrolloff = 8 -- keep 8 lines above/below cursor
-opt.wrap = false -- no line wrapping
+opt.scrolloff = 16 -- keep 8 lines above/below cursor
+
+-- Wrap
+opt.wrap = true -- no line wrapping
+opt.linebreak = true
+opt.breakindent = true
+opt.showbreak = "↳ "
+
+-- Spell Check
+vim.opt.spell = true
+vim.opt.spelllang = { "en_us" }
 
 -- Search
 opt.ignorecase = true -- case insensitive search
@@ -26,6 +35,10 @@ opt.splitright = true -- new vertical splits go right
 opt.splitbelow = true -- new horizontal splits go below
 
 opt.scrolloff = 10
+
+vim.o.confirm = true
+vim.o.showmode = false
+vim.o.inccommand = "split"
 
 -- diagnostic
 vim.diagnostic.config({

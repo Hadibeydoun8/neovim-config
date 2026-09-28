@@ -74,7 +74,14 @@ return {
 		{
 			"<c-/>",
 			function()
-				Snacks.terminal()
+				Snacks.terminal(nil, {
+					win = {
+						position = "float",
+						width = 0.8,
+						height = 0.8,
+						border = "rounded",
+					},
+				})
 			end,
 			desc = "Toggle Terminal",
 		},

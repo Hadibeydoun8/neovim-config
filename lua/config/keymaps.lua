@@ -9,6 +9,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
+vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+
 vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Focus left" })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Focus right" })
 vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Focus down" })
@@ -17,5 +19,7 @@ vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Focus up" })
 vim.keymap.set("n", "<leader>tt", "<cmd>split | terminal<cr>", { desc = "Open terminal" })
 
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Show diagnostic" })
+
+vim.keymap.set("n", "<leader>r", "<cmd>SnipRun<cr>", { desc = "Run code block" })
 
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })

@@ -5,4 +5,10 @@ return {
 		"nvim-mini/mini.icons", -- or 'nvim-tree/nvim-web-devicons'
 	},
 	opts = {},
+
+	{
+		"michaelb/sniprun",
+		build = "sh install.sh",
+		opts = {},
+	},
 }
