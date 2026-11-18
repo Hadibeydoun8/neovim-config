@@ -23,7 +23,7 @@ opt.breakindent = true
 opt.showbreak = "↳ "
 
 -- Spell Check
-vim.opt.spell = true
+vim.opt.spell = false
 vim.opt.spelllang = { "en_us" }
 
 -- Search
@@ -45,7 +45,9 @@ vim.diagnostic.config({
 	virtual_text = true,
 	severity_sort = true,
 	float = { border = "rounded", source = "if_many" },
-	underline = { severity = { min = vim.diagnostic.severity.WARN } },
+	-- underline = { severity = { min = vim.diagnostic.severity.WARN } },
+
+	underline = true,
 
 	jump = {
 		on_jump = function(_, bufnr)

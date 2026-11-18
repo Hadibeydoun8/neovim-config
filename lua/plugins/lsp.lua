@@ -1,18 +1,20 @@
 return {
 	{
-		-- FIX: Corrected organization name from 'mason-org' to 'williamboman'
-		"williamboman/mason-lspconfig.nvim",
+		"mason-org/mason-lspconfig.nvim",
 		dependencies = {
-			{ "williamboman/mason.nvim", opts = {} },
+			{ "mason-org/mason.nvim", opts = {} },
 			"neovim/nvim-lspconfig",
 			"saghen/blink.cmp",
 		},
 		config = function()
 			require("mason-lspconfig").setup({
-				-- FIX: Changed automatic_enable to automatic_installation
-				automatic_installation = true,
+				automatic_enable = {
+					exclude = { "omnisharp" },
+				},
 				ensure_installed = {
 					"ts_ls",
+					"basedpyright",
+					"ruff",
 					"clangd",
 					"rust_analyzer",
 					"roslyn_ls",
@@ -47,9 +49,48 @@ return {
 				end,
 			})
 
+			-- Python: basedpyright for types/completion, ruff for lint + format.
+			-- uv puts its environment in <project>/.venv, so hand that interpreter
+			-- to basedpyright or it resolves imports against the system Python.
+			vim.lsp.config("basedpyright", {
+				before_init = function(_, config)
+					local venv = (config.root_dir or vim.fn.getcwd()) .. "/.venv"
+					local python = venv .. "/bin/python"
+					if vim.uv.fs_stat(python) then
+						config.settings = vim.tbl_deep_extend("force", config.settings or {}, {
+							python = { pythonPath = python },
+						})
+					end
+				end,
+				settings = {
+					basedpyright = {
+						analysis = {
+							typeCheckingMode = "standard",
+							diagnosticMode = "openFilesOnly",
+							useLibraryCodeForTypes = true,
+							diagnosticSeverityOverrides = {
+								-- ruff already reports these; don't say it twice.
+								reportUnusedImport = "none",
+								reportUnusedVariable = "none",
+								reportMissingTypeStubs = "none",
+							},
+						},
+					},
+				},
+			})
+
+			vim.lsp.config("ruff", {
+				on_attach = function(client)
+					-- basedpyright owns hover for Python.
+					client.server_capabilities.hoverProvider = false
+				end,
+			})
+
 			-- Enable all configured language servers
 			vim.lsp.enable({
 				"ts_ls",
+				"basedpyright",
+				"ruff",
 				"clangd",
 				"rust_analyzer",
 				"roslyn_ls",

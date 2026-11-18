@@ -23,3 +23,7 @@ vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Show diagn
 vim.keymap.set("n", "<leader>r", "<cmd>SnipRun<cr>", { desc = "Run code block" })
 
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+
+vim.keymap.set("n", "<leader>q", function()
+	vim.diagnostic.setqflist({ open = true })
+end, { desc = "Diagnostics to quickfix" })

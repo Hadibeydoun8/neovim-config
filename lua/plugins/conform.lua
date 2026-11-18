@@ -19,6 +19,13 @@ return {
 				}
 			end
 
+			if ft == "python" then
+				return {
+					timeout_ms = 2000,
+					lsp_format = "never",
+				}
+			end
+
 			if vim.bo[bufnr].filetype == "aspvbs" then
 				return {
 					timeout_ms = 500,
@@ -42,6 +49,9 @@ return {
 			lua = { "stylua" },
 			tex = { "latexindent" },
 			plaintex = { "latexindent" },
+			python = { "ruff_organize_imports", "ruff_format" },
+			json = { "prettier" },
+			jsonc = { "prettier" }, -- JSON with comments
 		},
 		formatters = {
 			csharpier = {
